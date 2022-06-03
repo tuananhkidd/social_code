@@ -1,7 +1,9 @@
 package com.base.mvvmbasekotlin
 
 import com.base.mvvmbasekotlin.base.BaseActivity
+import com.base.mvvmbasekotlin.base.custom.LoadingDialog
 import com.base.mvvmbasekotlin.ui.SplashFragment
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,9 +19,15 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initView() {
+        FirebaseApp.initializeApp(this)
         getViewController().addFragment(SplashFragment::class.java)
     }
 
     override fun initData() {
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LoadingDialog.getInstance(this).destroyLoadingDialog()
     }
 }

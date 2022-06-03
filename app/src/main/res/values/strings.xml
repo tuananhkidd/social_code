@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">MVVMBaseKotlin</string>
+    <string name="app_name">SocialCode</string>
     <string name="error_place_holder">Error Happend.Try again!</string>
+    <string name="timeout_error">Quá thời gian kết nối máy chủ</string>
     <integer name="activity_anim_duration">300</integer>
     <integer name="activity_anim_duration_out">500</integer>
 </resources>

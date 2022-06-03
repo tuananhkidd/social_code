@@ -1,24 +1,18 @@
 package com.base.mvvmbasekotlin.ui
 
+import android.animation.Animator
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.Observer
-import com.base.mvvmbasekotlin.R
-import com.base.mvvmbasekotlin.adapter.SearchAdapter
-import com.base.mvvmbasekotlin.base.BaseFragment
-import com.base.mvvmbasekotlin.base.permission.PermissionHelper
-import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
+import com.base.mvvmbasekotlin.R
+import com.base.mvvmbasekotlin.base.BaseFragment
 import com.base.mvvmbasekotlin.ui.home.HomeFragment
+import com.base.mvvmbasekotlin.ui.login.LoginFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.splash_fragment.*
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment() {
-    private val searchAdapter: SearchAdapter by lazy {
-        SearchAdapter(requireContext())
-    }
-    private val permissionHelper: PermissionHelper by lazy {
-        PermissionHelper()
-    }
 
     override val layoutId: Int
         get() = R.layout.splash_fragment
@@ -31,10 +25,7 @@ class SplashFragment : BaseFragment() {
     }
 
     override fun initView() {
-        initAdapter()
-        viewModel.getData()
-        viewModel.data.observe(viewLifecycleOwner, {
-        })
+
     }
 
     override fun initData() {
@@ -42,25 +33,27 @@ class SplashFragment : BaseFragment() {
     }
 
     override fun initListener() {
-        Looper.getMainLooper()?.let {
-            Handler(it).postDelayed({
-                getVC().replaceFragment(HomeFragment::class.java)
-            },1500)
-        }
+        img_anim.setAnimation("splash.json")
+        img_anim.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
 
-    }
+            }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
+            override fun onAnimationEnd(animation: Animator?) {
+                if(!viewModel.isLogin()){
+                    getVC().replaceFragment(LoginFragment::class.java)
+                }else{
+                    getVC().replaceFragment(HomeFragment::class.java)
+                }
 
+            }
 
-    private fun initAdapter() {
+            override fun onAnimationCancel(animation: Animator?) {
+            }
 
+            override fun onAnimationStart(animation: Animator?) {
+            }
+        })
     }
 
 

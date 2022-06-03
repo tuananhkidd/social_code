@@ -3,6 +3,7 @@ package com.base.mvvmbasekotlin.ui.home
 import com.base.mvvmbasekotlin.R
 import com.base.mvvmbasekotlin.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.home_fragment.*
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
@@ -18,7 +19,7 @@ class HomeFragment : BaseFragment() {
         get() = R.layout.home_fragment
 
     override fun initView() {
-        
+        img_anim.setAnimation("home.json")
     }
 
     override fun initData() {
